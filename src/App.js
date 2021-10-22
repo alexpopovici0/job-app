@@ -17,8 +17,9 @@ import SearchBar from "./components/SearchBar";
 import JobCard from "./components/Job/JobCard";
 import NewJobModal from "./components/Job/NewJobModal";
 import jobData from "./dummyDate";
-import { firestore, app } from "./firebase/config";
+import { firestore, app, firestorage } from "./firebase/config";
 import ViewJobModal from "./components/Job/ViewJobModal";
+import ApplyJobModal from "./components/Job/ApplyJobModal";
 
 function App() {
   const [jobs, setJobs] = useState([]);
@@ -26,6 +27,7 @@ function App() {
   const [newJobModal, setNewJobModal] = useState(false);
   const [customSearch, setCustomSearch] = useState(false);
   const [viewJob, setViewJob] = useState({});
+  const [applyJobModal, setApplyJobModal] = useState(false);
 
   const fetchJobs = async () => {
     setCustomSearch(false);
@@ -69,6 +71,24 @@ function App() {
     fetchJobs();
   };
 
+  const applyJob = async (applyDetails) => {
+    await firestore
+      .collection("applications")
+      .add({
+        ...applyDetails,
+        file: applyDetails.file.name,
+        job: viewJob.id,
+      })
+      .then((e) => {
+        const storageRef = firestorage.ref();
+        const fileRef = storageRef.child(e.f_.path.segments[1]);
+        fileRef.put(applyDetails.file);
+      })
+      .then(() => {
+        setApplyJobModal(false);
+      });
+  };
+
   useEffect(() => {
     fetchJobs();
   }, []);
@@ -76,12 +96,22 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Header openNewJobModal={() => setNewJobModal(true)} />
+      <ApplyJobModal
+        job={viewJob}
+        applyJob={applyJob}
+        applyJobModal={applyJobModal}
+        closeModal={() => setApplyJobModal(false)}
+      />
       <NewJobModal
         newJobModal={newJobModal}
         postJob={postJob}
         closeNewJobModal={() => setNewJobModal(false)}
       />
-      <ViewJobModal job={viewJob} closeModal={() => setViewJob({})} />
+      <ViewJobModal
+        job={viewJob}
+        closeModal={() => setViewJob({})}
+        openApplyModal={() => setApplyJobModal(true)}
+      />
       <Box mb={3}>
         <Grid container justify="center">
           <Grid item xs={10}>

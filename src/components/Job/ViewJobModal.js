@@ -82,14 +82,7 @@ export default (props) => {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button
-          variant="outlined"
-          component="a"
-          href={props.job.link}
-          target="_blank"
-        >
-          Apply
-        </Button>
+        <Button onClick={props.openApplyModal}>Apply</Button>
       </DialogActions>
     </Dialog>
   );

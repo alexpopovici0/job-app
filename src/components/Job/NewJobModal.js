@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
   Box,
   Grid,
-  FilledInput,
+  TextField,
   Select,
   MenuItem,
   Dialog,
@@ -116,13 +116,13 @@ export default (props) => {
       <DialogContent>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <FilledInput
+            <TextField
+              variant="filled"
               onChange={handleChange}
               name="title"
               value={jobDetails.title}
               autoComplete="off"
               placeholder="Job title*"
-              disableUnderline
               fullWidth
             />
           </Grid>
@@ -131,7 +131,6 @@ export default (props) => {
               onChange={handleChange}
               name="type"
               value={jobDetails.type}
-              disableUnderline
               variant="filled"
               fullWidth
             >
@@ -141,24 +140,24 @@ export default (props) => {
             </Select>
           </Grid>
           <Grid item xs={6}>
-            <FilledInput
+            <TextField
+              variant="filled"
               onChange={handleChange}
               name="companyName"
               value={jobDetails.companyName}
               autoComplete="off"
               placeholder="Company name*"
-              disableUnderline
               fullWidth
             />
           </Grid>
           <Grid item xs={6}>
-            <FilledInput
+            <TextField
+              variant="filled"
               onChange={handleChange}
               name="companyUrl"
               value={jobDetails.companyUrl}
               autoComplete="off"
               placeholder="Company Url*"
-              disableUnderline
               fullWidth
             />
           </Grid>
@@ -167,7 +166,6 @@ export default (props) => {
               onChange={handleChange}
               name="location"
               value={jobDetails.location}
-              disableUnderline
               variant="filled"
               fullWidth
             >
@@ -176,24 +174,24 @@ export default (props) => {
             </Select>
           </Grid>
           <Grid item xs={6}>
-            <FilledInput
+            <TextField
+              variant="filled"
               onChange={handleChange}
               name="link"
               value={jobDetails.link}
               autoComplete="off"
               placeholder="Job link*"
-              disableUnderline
               fullWidth
             />
           </Grid>
           <Grid item xs={12}>
-            <FilledInput
+            <TextField
+              variant="filled"
               onChange={handleChange}
               name="description"
               value={jobDetails.description}
               autoComplete="off"
               placeholder="Job description*"
-              disableUnderline
               fullWidth
               multiline
               rows={4}
